@@ -1,4 +1,7 @@
 package com.sparta.msa_exam.order.repository;
 
-public interface OrderRepository {
+import com.sparta.msa_exam.order.entity.Orders;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Orders, Long> {
 }

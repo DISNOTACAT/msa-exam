@@ -12,16 +12,30 @@ spring:
         - id: orders-service
           uri: lb://orders-service
           predicates:
-            - Path=/order/**
-        - id: products-service
-          uri: lb://products-service
+            - Path=/orders/**
+        - id: products-service1
+          uri: http://localhost:19093
           predicates:
-            - Path=/product/**
+            - Path=/products/**
+            - Weight=group-products, 7
+        - id: products-service
+          uri: http://localhost:19094
+          predicates:
+            - Path=/products/**
+            - Weight=group-products, 3
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
       discovery:
         locator:
-          enabled: true  # ??? ?????? ?? ???? ???? ????? ??
+          enabled: true
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+service:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
